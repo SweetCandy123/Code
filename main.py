@@ -31,11 +31,14 @@ async def main():
 
     anim_count, anim_speed, anim_limit = 0, 60, 2000
 
-    bg = pygame.image.load('bg.jpg').convert()
-    game_bg = pygame.image.load('bg2.jpg').convert()
+    bg = pygame.Surface((750, 940))
+    bg.fill((0, 0, 0))
 
-    main_font = pygame.font.Font('font.ttf', 65)
-    font = pygame.font.Font('font.ttf', 45)
+    game_bg = pygame.Surface((450, 900))
+    game_bg.fill((20, 20, 20))
+
+    main_font = pygame.font.SysFont(None, 65)
+    font = pygame.font.SysFont(None, 45)
 
     title_tetris = main_font.render('TETRIS', True, pygame.Color('darkorange'))
     title_score = font.render('score:', True, pygame.Color('green'))
@@ -57,20 +60,11 @@ async def main():
             return False
         return True
 
-
     def get_record():
-        try:
-            with open('record') as f:
-                return f.readline()
-        except FileNotFoundError:
-            with open('record', 'w') as f:
-                f.write('0')
-
+        return "0"
 
     def set_record(record, score):
-        rec = max(int(record), score)
-        with open('record', 'w') as f:
-            f.write(str(rec))
+        pass
 
 
     while True:
@@ -179,8 +173,10 @@ async def main():
                     sc.blit(game_sc, (20, 20))
                     pygame.display.flip()
                     clock.tick(200)
-            await asyncio.sleep(0)
+
         pygame.display.flip()
         clock.tick(FPS)
+
+        await asyncio.sleep(0)
 if __name__ == '__main__':
     asyncio.run(main())
